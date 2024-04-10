@@ -10,9 +10,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next)
     {
         if ($request->user() && $request->user()->role !== 'admin') {
-
             return redirect('/dashboard')->with('error', 'You are not authorized to perform this action.');
-
         }
 
         return $next($request);
