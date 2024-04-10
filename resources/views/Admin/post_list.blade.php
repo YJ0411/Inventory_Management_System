@@ -16,7 +16,9 @@
                         <th>Title</th>
                         <th>User</th>
                         <th>Content</th>
-                        <th>Action</th>
+                        @if($isAdmin)
+                            <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>

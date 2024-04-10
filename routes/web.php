@@ -83,12 +83,17 @@ Route::post('/insert-customer',[CustomerController::class,'store'])->middleware(
 Route::get('/all-customers',[CustomerController::class,'customersData'])->middleware(['auth'])->name('all.customers');
 
 //post
-Route::get('/posts',[postController::class,'index'])->name('postlist');//route to post list page
-Route::get('/newpost', [postController::class,'create'])->middleware(['auth'])->name('createpost');//route to create post page
-Route::post('/insert-new-post',[postController::class,'store'])->name('newpost');//logic to create new post
-Route::get('/posts/{id}',[postController::class,'show'])->name('showlist');//route to edit post page
-Route::put('/edit-post/{id}',[postController::class,'update'])->name('editpost');//logic to edit post
-Route::delete('/posts/{id}',[postController::class,'destroy'])->name('deletepost');//logic to delete post
+Route::middleware('auth')->group(function () {
+    Route::get('/posts', [postController::class, 'index'])->name('postlist');
+    
+    Route::get('/newpost', [postController::class, 'create'])->name('createpost');
+    Route::post('/insert-new-post', [postController::class, 'store'])->name('newpost')->middleware('can:create,App\Models\Post');
+    
+    Route::get('/posts/{id}', [postController::class, 'show'])->name('showlist');
+    Route::put('/edit-post/{id}', [postController::class, 'update'])->name('editpost')->middleware('can:update,App\Models\Post');
+    
+    Route::delete('/posts/{id}', [postController::class, 'destroy'])->name('deletepost')->middleware('can:delete,App\Models\Post');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
