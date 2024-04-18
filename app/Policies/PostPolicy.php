@@ -2,11 +2,11 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\posts;
+use App\Models\Post;
 
 class PostPolicy
 {
-    public function view(User $user, posts $post)
+    public function view(User $user, Post $post)
     {
         return true; 
     }

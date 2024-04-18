@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\posts;
+use App\Models\Post;
 
 class postController extends Controller
 {
@@ -14,7 +14,7 @@ class postController extends Controller
      */
     public function index()
     {
-        $posts = posts::all();
+        $posts = Post::all();
         $user = Auth::user();
         $isAdmin = $user && $user->role === 'admin';
         return view('Admin.post_list', compact('posts', 'isAdmin'));
